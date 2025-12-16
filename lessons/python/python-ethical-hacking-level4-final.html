@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python Beginner Lessons with Simulation</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #0f172a;
+        color: #f1f5f9;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 900px;
+        margin: 30px auto;
+        background-color: #1e293b;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 0 25px #22c55e;
+    }
+    h1, h2 {
+        color: #38bdf8;
+        text-align: center;
+    }
+    h3 {
+        color: #22c55e;
+    }
+    p {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+    pre {
+        background-color: #111827;
+        padding: 15px;
+        border-radius: 8px;
+        overflow-x: auto;
+        font-size: 14px;
+        color: #facc15;
+        margin-bottom: 20px;
+    }
+    button {
+        background-color: #22c55e;
+        border: none;
+        color: black;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        margin: 5px;
+    }
+    button:hover {
+        background-color: #16a34a;
+    }
+    textarea {
+        width: 100%;
+        height: 150px;
+        margin-top: 10px;
+        font-family: monospace;
+        font-size: 14px;
+        padding: 10px;
+        border-radius: 6px;
+        border: none;
+        background-color: #111827;
+        color: #f1f5f9;
+    }
+    #output {
+        background-color: #0f172a;
+        color: #facc15;
+        padding: 10px;
+        border-radius: 6px;
+        min-height: 50px;
+        margin-top: 10px;
+        white-space: pre-wrap;
+        font-family: monospace;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🐍 Python Beginner Lessons</h1>
+    <h2 id="topic"></h2>
+    <p id="description"></p>
+    <pre id="example"></pre>
+    
+    <h3>Try It Yourself:</h3>
+    <textarea id="userCode"></textarea><br>
+    <button onclick="runCode()">Run Code</button>
+    <button onclick="clearOutput()">Clear Output</button>
+    <div id="output"></div>
+
+    <div style="text-align:center;">
+        <button onclick="prevLesson()">⬅ Previous</button>
+        <button onclick="nextLesson()">Next ➡</button>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
+
+<script>
+const lessons = [
+    {
+        topic: "1. Printing Output",
+        description: "The print() function displays information to the screen. You can print text, numbers, or variables. It's often the first thing beginners learn.",
+        example: "print('Hello, World!')\nname = 'Alice'\nprint('Hello', name)"
+    },
+    {
+        topic: "2. User Input",
+        description: "Use input() to take input from the user. Input is always treated as a string.",
+        example: "name = input('Enter your name: ')\nprint('Hello', name)"
+    },
+    {
+        topic: "3. Comments",
+        description: "Use # for single-line comments. Multi-line comments can be written using triple quotes.",
+        example: "# This is a single-line comment\nprint('Hello')\n'''\nThis is a\nmulti-line comment\n'''"
+    },
+    {
+        topic: "4. Variables and Data Types",
+        description: "Variables store information. Python has several types: int, float, str, bool. You don't need to declare the type explicitly.",
+        example: "age = 20  # int\nheight = 5.9  # float\nname = 'Alice'  # str\nis_student = True  # bool"
+    },
+    {
+        topic: "5. Strings and Operations",
+        description: "Strings are sequences of characters. You can concatenate, repeat, or slice them.",
+        example: "name = 'Alice'\nprint(name * 2)\nprint(name + ' Smith')\nprint(name[0])  # First letter"
+    },
+    {
+        topic: "6. Lists",
+        description: "Lists store multiple items. They are ordered and mutable.",
+        example: "fruits = ['apple','banana','cherry']\nprint(fruits[0])\nfruits.append('orange')\nprint(fruits)"
+    },
+    {
+        topic: "7. Dictionaries",
+        description: "Dictionaries store key-value pairs. Access values by keys.",
+        example: "person = {'name':'Alice','age':20}\nprint(person['name'])\nperson['city'] = 'New York'"
+    },
+    {
+        topic: "8. Tuples",
+        description: "Tuples are ordered and immutable collections.",
+        example: "coordinates = (10, 20)\nprint(coordinates[0])"
+    },
+    {
+        topic: "9. Sets",
+        description: "Sets are unordered collections with no duplicates.",
+        example: "numbers = {1,2,3,3}\nprint(numbers)  # {1,2,3}"
+    },
+    {
+        topic: "10. If Statements",
+        description: "Used to make decisions based on conditions.",
+        example: "age = 20\nif age >= 18:\n  print('Adult')\nelse:\n  print('Minor')"
+    },
+    {
+        topic: "11. For Loops",
+        description: "Used to iterate over sequences like lists or ranges.",
+        example: "for i in range(5):\n  print(i)\n\nfruits = ['apple','banana']\nfor fruit in fruits:\n  print(fruit)"
+    },
+    {
+        topic: "12. While Loops",
+        description: "Repeats as long as a condition is True.",
+        example: "count = 0\nwhile count < 5:\n  print(count)\n  count += 1"
+    },
+    {
+        topic: "13. Functions",
+        description: "Functions let you group reusable code. Use def to define them.",
+        example: "def greet(name):\n  print('Hello', name)\ngreet('Alice')"
+    },
+    {
+        topic: "14. Return Statement",
+        description: "Functions can return values using return.",
+        example: "def add(a,b):\n  return a+b\nsum = add(3,5)\nprint(sum)"
+    },
+    {
+        topic: "15. Modules",
+        description: "Modules are Python files you can import to reuse functions or variables.",
+        example: "import math\nprint(math.sqrt(16))"
+    },
+    {
+        topic: "16. Exception Handling",
+        description: "Use try-except to handle errors gracefully.",
+        example: "try:\n  x = int(input('Enter a number: '))\nexcept ValueError:\n  print('Invalid input')"
+    },
+    {
+        topic: "17. Boolean Logic",
+        description: "Use True, False, and logical operators: and, or, not.",
+        example: "x = 5\ny = 10\nif x < y and y > 0:\n  print('Condition True')"
+    },
+    {
+        topic: "18. File I/O",
+        description: "Read from and write to files.",
+        example: "f = open('data.txt','w')\nf.write('Hello')\nf.close()"
+    },
+    {
+        topic: "19. List Comprehensions",
+        description: "Compact way to create lists.",
+        example: "squares = [x**2 for x in range(5)]\nprint(squares)"
+    },
+    {
+        topic: "20. Dictionaries Loops",
+        description: "Iterate through keys and values in dictionaries.",
+        example: "person = {'name':'Alice','age':20}\nfor key,value in person.items():\n  print(key,value)"
+    }
+];
+
+let current = 0;
+
+function showLesson(index) {
+    document.getElementById("topic").innerText = lessons[index].topic;
+    document.getElementById("description").innerText = lessons[index].description;
+    document.getElementById("example").innerText = lessons[index].example;
+    document.getElementById("userCode").value = lessons[index].example;
+    clearOutput();
+}
+
+function nextLesson() {
+    current = (current + 1) % lessons.length;
+    showLesson(current);
+}
+
+function prevLesson() {
+    current = (current - 1 + lessons.length) % lessons.length;
+    showLesson(current);
+}
+
+// Skulpt configuration for live Python execution
+function outf(text) {
+    let outputDiv = document.getElementById("output");
+    outputDiv.innerText += text;
+}
+
+function runCode() {
+    let code = document.getElementById("userCode").value;
+    let outputDiv = document.getElementById("output");
+    outputDiv.innerText = "";
+    Sk.configure({
+        output: outf,
+        read: function(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+    });
+    (Sk.misceval.asyncToPromise(function() {
+        return Sk.importMainWithBody("<stdin>", false, code, true);
+    })).catch(function(err) {
+        outputDiv.innerText = err.toString();
+    });
+}
+
+function clearOutput() {
+    document.getElementById("output").innerText = "";
+}
+
+// Initialize
+showLesson(current);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Python Ethical Hacking – Level 2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+    background:#0b0f14;
+    color:#e6edf3;
+    font-family: Consolas, monospace;
+    padding:20px;
+}
+h1,h2,h3 { color:#00e5ff; }
+pre {
+    background:#111827;
+    padding:15px;
+    border-radius:8px;
+    overflow-x:auto;
+}
+code { color:#7dd3fc; }
+.box {
+    border-left:5px solid #00e5ff;
+    padding:15px;
+    background:#111827;
+    margin:20px 0;
+}
+.warn {
+    border-left:5px solid #ff5555;
+    padding:15px;
+    background:#111827;
+    margin:20px 0;
+    color:#ff8888;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🐍 Python Ethical Hacking – Level 2 (Pentesting)</h1>
+
+<div class="warn">
+⚠️ <b>LEGAL WARNING</b><br>
+Only test systems you OWN or have WRITTEN PERMISSION to test.
+Unauthorized testing is illegal.
+</div>
+
+<hr>
+
+<h2>📌 What You Learn in Level 2</h2>
+<ul>
+<li>Advanced reconnaissance</li>
+<li>Banner grabbing</li>
+<li>Service detection</li>
+<li>Password attack theory (no illegal use)</li>
+<li>Web pentesting concepts</li>
+<li>Defensive countermeasures</li>
+</ul>
+
+<hr>
+
+<h2>1️⃣ Advanced Reconnaissance</h2>
+
+<h3>WHOIS Lookup (Passive Recon)</h3>
+<pre><code>
+pip install python-whois
+</code></pre>
+
+<pre><code>
+import whois
+
+domain = "example.com"
+info = whois.whois(domain)
+print(info)
+</code></pre>
+
+<div class="box">
+WHOIS reveals domain owner info, registrar, dates, and name servers.
+</div>
+
+<hr>
+
+<h2>2️⃣ Banner Grabbing (Service Identification)</h2>
+
+<h3>Why Banner Grabbing?</h3>
+<p>
+It helps identify services, versions, and misconfigurations.
+</p>
+
+<pre><code>
+import socket
+
+target = "127.0.0.1"
+port = 80
+
+s = socket.socket()
+s.settimeout(3)
+s.connect((target, port))
+s.send(b"HEAD / HTTP/1.1\r\n\r\n")
+banner = s.recv(1024)
+print(banner.decode())
+s.close()
+</code></pre>
+
+<hr>
+
+<h2>3️⃣ TCP Port Range Scanner</h2>
+
+<pre><code>
+import socket
+
+target = "127.0.0.1"
+
+for port in range(1, 1025):
+    s = socket.socket()
+    s.settimeout(0.5)
+    result = s.connect_ex((target, port))
+    if result == 0:
+        print("Open port:", port)
+    s.close()
+</code></pre>
+
+<div class="warn">
+Scan only localhost or lab machines.
+</div>
+
+<hr>
+
+<h2>4️⃣ Password Attack Theory (Educational)</h2>
+
+<h3>Dictionary Attack Concept</h3>
+
+<pre><code>
+passwords = ["admin", "123456", "password", "letmein"]
+correct_password = "admin"
+
+for guess in passwords:
+    if guess == correct_password:
+        print("Password found:", guess)
+        break
+</code></pre>
+
+<div class="box">
+Used only to test your own login systems.
+</div>
+
+<hr>
+
+<h2>5️⃣ Web Pentesting Basics (Safe)</h2>
+
+<h3>Check HTTP Headers</h3>
+
+<pre><code>
+import requests
+
+url = "https://example.com"
+response = requests.get(url)
+
+for header in response.headers:
+    print(header, ":", response.headers[header])
+</code></pre>
+
+<h3>Security Headers to Look For</h3>
+<ul>
+<li>Content-Security-Policy</li>
+<li>X-Frame-Options</li>
+<li>X-XSS-Protection</li>
+</ul>
+
+<hr>
+
+<h2>6️⃣ Input Validation Testing</h2>
+
+<pre><code>
+user_input = input("Enter username: ")
+
+if not user_input.isalnum():
+    print("Rejected: invalid characters")
+else:
+    print("Accepted")
+</code></pre>
+
+<hr>
+
+<h2>7️⃣ Defense: Secure Coding</h2>
+
+<h3>Password Hash + Salt</h3>
+
+<pre><code>
+import bcrypt
+
+password = b"mypassword"
+hashed = bcrypt.hashpw(password, bcrypt.gensalt())
+print(hashed)
+</code></pre>
+
+<h3>Verify Password</h3>
+
+<pre><code>
+bcrypt.checkpw(b"mypassword", hashed)
+</code></pre>
+
+<hr>
+
+<h2>🧪 Legal Practice Labs</h2>
+<ul>
+<li>Localhost scanning</li>
+<li>Test login brute-force prevention</li>
+<li>Header inspection</li>
+<li>Secure password storage</li>
+</ul>
+
+<hr>
+
+<h2>🎯 Career Path</h2>
+<ul>
+<li>Junior Pentester</li>
+<li>Security Analyst</li>
+<li>Bug Bounty Hunter (legal)</li>
+<li>Cybersecurity Engineer</li>
+</ul>
+
+<hr>
+
+<h2>🚀 Level 3 Preview</h2>
+<ul>
+<li>Python + Flask vulnerable lab</li>
+<li>CTF-style challenges</li>
+<li>Packet sniffing theory</li>
+<li>API pentesting</li>
+</ul>
+
+<footer>
+<hr>
+<p>Python Ethical Hacking • Level 2 • Educational Use Only</p>
+</footer>
+
+</body>
+</html>

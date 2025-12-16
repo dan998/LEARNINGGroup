@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Python Ethical Hacking – Level 3</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+    background:#020617;
+    color:#e5e7eb;
+    font-family: Consolas, monospace;
+    padding:20px;
+}
+h1,h2,h3 { color:#22d3ee; }
+pre {
+    background:#020617;
+    border:1px solid #1e293b;
+    padding:15px;
+    border-radius:10px;
+    overflow-x:auto;
+}
+.box {
+    border-left:6px solid #22d3ee;
+    background:#020617;
+    padding:15px;
+    margin:20px 0;
+}
+.warn {
+    border-left:6px solid #ef4444;
+    background:#020617;
+    padding:15px;
+    margin:20px 0;
+    color:#fca5a5;
+}
+.success {
+    border-left:6px solid #22c55e;
+    background:#020617;
+    padding:15px;
+    margin:20px 0;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🐍 Python Ethical Hacking – Level 3</h1>
+<h3>CTF • Vulnerable Labs • Real-World Skills</h3>
+
+<div class="warn">
+⚠️ <b>LEGAL RULE</b><br>
+All activities must be done on:
+<ul>
+<li>Localhost</li>
+<li>Virtual Machines</li>
+<li>CTF platforms</li>
+<li>Systems you own or have permission for</li>
+</ul>
+</div>
+
+<hr>
+
+<h2>🎯 Level 3 Objectives</h2>
+<ul>
+<li>Create vulnerable apps</li>
+<li>Exploit them safely</li>
+<li>Understand attacker mindset</li>
+<li>Apply real defensive fixes</li>
+</ul>
+
+<hr>
+
+<h2>1️⃣ Build a Vulnerable Python Web App (Lab)</h2>
+
+<h3>Install Flask</h3>
+<pre><code>
+pip install flask
+</code></pre>
+
+<h3>Vulnerable Login App</h3>
+<pre><code>
+from flask import Flask, request
+
+app = Flask(__name__)
+
+@app.route("/", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+
+        if username == "admin" and password == "admin123":
+            return "Login Successful"
+        return "Login Failed"
+
+    return '''
+        <form method="POST">
+            <input name="username">
+            <input name="password">
+            <button>Login</button>
+        </form>
+    '''
+
+app.run(debug=True)
+</code></pre>
+
+<div class="box">
+This app is intentionally weak for learning purposes.
+</div>
+
+<hr>
+
+<h2>2️⃣ Brute Force Simulation (CTF-Style)</h2>
+
+<h3>Password Guess Script</h3>
+<pre><code>
+password_list = ["1234", "admin", "admin123", "password"]
+
+correct = "admin123"
+
+for pwd in password_list:
+    print("Trying:", pwd)
+    if pwd == correct:
+        print("✔ Password Found:", pwd)
+        break
+</code></pre>
+
+<div class="success">
+CTF teaches logic — not crime.
+</div>
+
+<hr>
+
+<h2>3️⃣ Command Injection Concept (Local Lab)</h2>
+
+<h3>Vulnerable Code</h3>
+<pre><code>
+import os
+
+command = input("Enter command: ")
+os.system(command)
+</code></pre>
+
+<h3>Why Dangerous?</h3>
+<p>
+User controls system commands.
+</p>
+
+<h3>Secure Version</h3>
+<pre><code>
+import subprocess
+
+subprocess.run(["ls"])
+</code></pre>
+
+<hr>
+
+<h2>4️⃣ File Upload Vulnerability (Theory)</h2>
+
+<h3>Dangerous Pattern</h3>
+<pre><code>
+file = request.files["file"]
+file.save(file.filename)
+</code></pre>
+
+<h3>Secure Fix</h3>
+<pre><code>
+if file.filename.endswith(".jpg"):
+    file.save("uploads/image.jpg")
+</code></pre>
+
+<hr>
+
+<h2>5️⃣ CTF Logic Challenge</h2>
+
+<h3>Find the Flag</h3>
+<pre><code>
+flag = "CTF{python_is_powerful}"
+
+user_input = input("Enter flag: ")
+
+if user_input == flag:
+    print("Correct!")
+else:
+    print("Wrong flag")
+</code></pre>
+
+<hr>
+
+<h2>6️⃣ Packet Sniffing (Concept Only)</h2>
+
+<div class="box">
+Packet sniffing captures network traffic.
+Tools: Wireshark, tcpdump
+</div>
+
+<h3>Python Raw Socket (Localhost)</h3>
+<pre><code>
+import socket
+
+s = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_TCP)
+print("Sniffer started")
+</code></pre>
+
+<div class="warn">
+Root privileges required — LAB ONLY.
+</div>
+
+<hr>
+
+<h2>7️⃣ API Pentesting Basics</h2>
+
+<h3>Insecure API</h3>
+<pre><code>
+@app.route("/api/user")
+def user():
+    return {"username": "admin", "password": "admin123"}
+</code></pre>
+
+<h3>Secure API</h3>
+<pre><code>
+@app.route("/api/user")
+def user():
+    return {"username": "admin"}
+</code></pre>
+
+<hr>
+
+<h2>8️⃣ Defense Checklist</h2>
+<ul>
+<li>Input validation</li>
+<li>Rate limiting</li>
+<li>Authentication tokens</li>
+<li>Password hashing</li>
+<li>Logging & monitoring</li>
+</ul>
+
+<hr>
+
+<h2>🧪 Recommended Legal Labs</h2>
+<ul>
+<li>Local Flask apps</li>
+<li>CTF challenges</li>
+<li>OWASP Juice Shop (local)</li>
+<li>Python vulnerability labs</li>
+</ul>
+
+<hr>
+
+<h2>🎓 Skill Level Achieved</h2>
+
+<div class="success">
+✔ Intermediate–Advanced Ethical Hacker<br>
+✔ CTF Ready<br>
+✔ Secure Developer Mindset
+</div>
+
+<hr>
+
+<h2>🚀 LEVEL 4 Preview</h2>
+<ul>
+<li>Red Team vs Blue Team</li>
+<li>Exploit writing (safe)</li>
+<li>Malware analysis (defensive)</li>
+<li>Bug bounty workflow</li>
+<li>Professional pentest reports</li>
+</ul>
+
+<footer>
+<hr>
+<p>Python Ethical Hacking – Level 3 • Educational & Legal Only</p>
+</footer>
+
+</body>
+</html>

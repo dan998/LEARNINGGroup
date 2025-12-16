@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Python Ethical Hacking Guide</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0d1117;
+            color: #c9d1d9;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            color: #58a6ff;
+        }
+        code {
+            background: #161b22;
+            padding: 4px 6px;
+            border-radius: 5px;
+            color: #79c0ff;
+        }
+        pre {
+            background: #161b22;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        .box {
+            border-left: 4px solid #58a6ff;
+            background: #161b22;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .warning {
+            border-left: 4px solid #f85149;
+            background: #161b22;
+            padding: 15px;
+            margin: 20px 0;
+            color: #f85149;
+        }
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #8b949e;
+        }
+    </style>
+</head>
+<body>
+
+<h1>🐍 Python Ethical Hacking – Full Beginner Guide</h1>
+
+<div class="warning">
+    <strong>⚠️ Legal Notice:</strong><br>
+    This guide is for <b>educational and ethical purposes only</b>.
+    Only test systems you own or have written permission to test.
+</div>
+
+<h2>📌 What is Ethical Hacking?</h2>
+<p>
+Ethical hacking is the practice of identifying security weaknesses in systems
+<b>with permission</b> to help secure them.
+Python is widely used because it is simple, powerful, and flexible.
+</p>
+
+<h2>🧰 Required Tools</h2>
+<ul>
+    <li>Python 3+</li>
+    <li>Linux / Termux / Pydroid3</li>
+    <li>Basic networking knowledge</li>
+</ul>
+
+<h2>📚 Lesson Roadmap</h2>
+<ol>
+    <li>Python Basics for Security</li>
+    <li>Networking Fundamentals</li>
+    <li>Information Gathering</li>
+    <li>Port Scanning</li>
+    <li>Password Security</li>
+    <li>Web Security Basics</li>
+    <li>Defensive Coding</li>
+</ol>
+
+<hr>
+
+<h2>1️⃣ Python Basics for Ethical Hacking</h2>
+
+<h3>Variables & Input</h3>
+<pre><code>
+name = input("Enter your name: ")
+print("Welcome,", name)
+</code></pre>
+
+<h3>Loops</h3>
+<pre><code>
+for i in range(5):
+    print("Scan attempt:", i)
+</code></pre>
+
+<hr>
+
+<h2>2️⃣ Networking Fundamentals</h2>
+
+<h3>Understanding IP & Ports</h3>
+<p>
+An IP address identifies a device.
+Ports identify services (HTTP = 80, HTTPS = 443).
+</p>
+
+<h3>Get IP Address Using Python</h3>
+<pre><code>
+import socket
+
+hostname = socket.gethostname()
+ip = socket.gethostbyname(hostname)
+print("Your IP:", ip)
+</code></pre>
+
+<hr>
+
+<h2>3️⃣ Information Gathering (Reconnaissance)</h2>
+
+<h3>DNS Lookup</h3>
+<pre><code>
+import socket
+
+domain = "example.com"
+ip = socket.gethostbyname(domain)
+print("IP Address:", ip)
+</code></pre>
+
+<div class="box">
+Reconnaissance is passive when no direct interaction occurs.
+</div>
+
+<hr>
+
+<h2>4️⃣ Port Scanning (Educational)</h2>
+
+<h3>Simple Port Scanner</h3>
+<pre><code>
+import socket
+
+target = "127.0.0.1"
+ports = [21, 22, 80, 443]
+
+for port in ports:
+    s = socket.socket()
+    s.settimeout(1)
+    result = s.connect_ex((target, port))
+    if result == 0:
+        print("Port open:", port)
+    s.close()
+</code></pre>
+
+<div class="warning">
+⚠️ Scan only your own systems or lab environments.
+</div>
+
+<hr>
+
+<h2>5️⃣ Password Security & Hashing</h2>
+
+<h3>Why Hash Passwords?</h3>
+<p>
+Passwords should never be stored in plain text.
+</p>
+
+<h3>Hashing Example</h3>
+<pre><code>
+import hashlib
+
+password = "mypassword"
+hashed = hashlib.sha256(password.encode()).hexdigest()
+print(hashed)
+</code></pre>
+
+<hr>
+
+<h2>6️⃣ Web Security Basics</h2>
+
+<h3>Common Web Attacks</h3>
+<ul>
+    <li>SQL Injection</li>
+    <li>XSS</li>
+    <li>CSRF</li>
+</ul>
+
+<h3>Input Validation Example</h3>
+<pre><code>
+username = input("Username: ")
+
+if len(username) < 3:
+    print("Invalid username")
+else:
+    print("Accepted")
+</code></pre>
+
+<hr>
+
+<h2>7️⃣ Defensive Python Coding</h2>
+
+<h3>Try / Except</h3>
+<pre><code>
+try:
+    file = open("data.txt")
+except FileNotFoundError:
+    print("File not found")
+</code></pre>
+
+<h3>Rate Limiting Concept</h3>
+<p>
+Used to prevent brute-force attacks.
+</p>
+
+<hr>
+
+<h2>🎯 Practice Labs (Legal)</h2>
+<ul>
+    <li>Localhost scanning</li>
+    <li>Test login validation</li>
+    <li>Password hashing</li>
+    <li>Input sanitization</li>
+</ul>
+
+<hr>
+
+<h2>🚀 Next Steps</h2>
+<ul>
+    <li>Learn Linux</li>
+    <li>Study OWASP Top 10</li>
+    <li>Build secure servers</li>
+    <li>Try CTF platforms (legal)</li>
+</ul>
+
+<footer>
+    <p>Python Ethical Hacking Guide • Educational Use Only</p>
+</footer>
+
+</body>
+</html>
