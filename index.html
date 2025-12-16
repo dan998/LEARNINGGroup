@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WhatsApp Learning Group</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Loader -->
+<div class="loader"></div>
+
+<!-- Landing Section -->
+<header class="landing">
+    <h1>Welcome to Our WhatsApp Learning Group</h1>
+    <p>Python, Java & JavaScript | Beginner → Advanced</p>
+
+    <div class="cards-container">
+        <div class="card python">
+            <h2>Python</h2>
+            <p>Learn from beginner to advanced. Interactive sessions!</p>
+        </div>
+        <div class="card java">
+            <h2>Java</h2>
+            <p>Step-by-step lessons from basics to pro coding.</p>
+        </div>
+        <div class="card javascript">
+            <h2>JavaScript</h2>
+            <p>Master front-end & back-end programming with JS.</p>
+        </div>
+    </div>
+
+    <a href="https://chat.whatsapp.com/your-group-link" target="_blank" class="join-btn">Join Now</a>
+</header>
+
+<script>
+    // Simple loader fade out
+    window.addEventListener("load", () => {
+        document.querySelector(".loader").style.display = "none";
+    });
+</script>
+</body>
+</html>
