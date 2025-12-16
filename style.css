@@ -7,104 +7,133 @@
 }
 
 body {
-    background: #0f172a;
+    background: linear-gradient(-45deg, #0f172a, #1e293b, #0ea5e9, #38bdf8);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
     color: #f1f5f9;
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     padding: 20px;
 }
 
-/* Page heading */
-h1 {
-    font-size: 2.5rem;
+@keyframes gradientBG {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}
+
+.landing-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.landing-header h1 {
+    font-size: 2.8rem;
     color: #38bdf8;
     margin-bottom: 10px;
 }
 
-p {
+.landing-header p {
     font-size: 1.2rem;
+    color: #cbd5e1;
+}
+
+/* Cards container */
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+}
+
+/* Individual cards */
+.language-group {
+    border-radius: 20px;
+    padding: 25px;
+    width: 300px;
+    position: relative;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+}
+
+/* Hover effect */
+.language-group:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.6);
+}
+
+/* Language-specific colors */
+.language-group.python {
+    background: linear-gradient(145deg, #306998, #4B8BBE);
+    border: 2px solid #FFD43B;
+}
+
+.language-group.java {
+    background: linear-gradient(145deg, #b07219, #f8981d);
+    border: 2px solid #F0DB4F;
+}
+
+.language-group.javascript {
+    background: linear-gradient(145deg, #f0db4f, #f7df1e);
+    border: 2px solid #323330;
+}
+
+/* Language title */
+.language-group h2 {
+    color: #ffffff;
     margin-bottom: 20px;
+    text-align: center;
+    font-size: 1.6rem;
+    position: relative;
 }
 
-/* Loader (optional) */
-.loader {
-    border: 6px solid #f1f5f9;
-    border-top: 6px solid #38bdf8;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-    margin-bottom: 20px;
+/* Emoji icon */
+.language-group h2::before {
+    content: attr(data-icon);
+    font-size: 2rem;
+    margin-right: 8px;
 }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Lessons list container */
-#lessons-list {
-    list-style: none;
-    width: 100%;
-    max-width: 600px;
-}
-
-/* Individual lesson links */
-#lessons-list li {
-    margin-bottom: 10px;
-}
-
-#lessons-list a {
+/* Lessons inside cards */
+.lesson-link, .coming-soon {
     display: block;
-    background: rgba(56, 189, 248, 0.1);
-    color: #38bdf8;
-    text-decoration: none;
     padding: 12px 15px;
-    border-radius: 10px;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(56, 189, 248, 0.3);
-}
-
-#lessons-list a:hover {
-    background: rgba(56, 189, 248, 0.25);
-    transform: translateY(-3px);
-}
-
-/* Optional "expected" marker */
-#lessons-list a::before {
-    content: "▶ "; /* shows a small arrow before lesson */
-    color: #0ea5e9;
-    font-weight: bold;
-}
-
-/* Join button */
-.join-btn {
-    display: inline-block;
-    padding: 12px 25px;
-    background: #38bdf8;
-    color: #0f172a;
-    font-weight: 600;
+    margin-bottom: 10px;
     border-radius: 10px;
     text-decoration: none;
-    margin-top: 20px;
-    transition: background 0.3s, transform 0.2s;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
 }
 
-.join-btn:hover {
-    background: #0ea5e9;
-    transform: scale(1.05);
+/* Active lessons style */
+.lesson-link {
+    color: #ffffff;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+.lesson-link:hover {
+    background: rgba(0,0,0,0.35);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Coming Soon lessons style */
+.coming-soon {
+    color: #d1d5db;
+    border: 1px dashed #d1d5db;
+    background: rgba(255,255,255,0.05);
+    cursor: not-allowed;
+    font-style: italic;
 }
 
 /* Responsive */
-@media (max-width: 600px) {
-    h1 {
-        font-size: 2rem;
+@media (max-width: 1000px) {
+    .cards-container {
+        flex-direction: column;
+        align-items: center;
     }
-
-    #lessons-list a {
-        font-size: 0.95rem;
-        padding: 10px 12px;
+    .language-group {
+        width: 90%;
     }
 }
