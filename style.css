@@ -1,0 +1,110 @@
+/* Reset and general styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #0f172a;
+    color: #f1f5f9;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Page heading */
+h1 {
+    font-size: 2.5rem;
+    color: #38bdf8;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+/* Loader (optional) */
+.loader {
+    border: 6px solid #f1f5f9;
+    border-top: 6px solid #38bdf8;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Lessons list container */
+#lessons-list {
+    list-style: none;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Individual lesson links */
+#lessons-list li {
+    margin-bottom: 10px;
+}
+
+#lessons-list a {
+    display: block;
+    background: rgba(56, 189, 248, 0.1);
+    color: #38bdf8;
+    text-decoration: none;
+    padding: 12px 15px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+#lessons-list a:hover {
+    background: rgba(56, 189, 248, 0.25);
+    transform: translateY(-3px);
+}
+
+/* Optional "expected" marker */
+#lessons-list a::before {
+    content: "▶ "; /* shows a small arrow before lesson */
+    color: #0ea5e9;
+    font-weight: bold;
+}
+
+/* Join button */
+.join-btn {
+    display: inline-block;
+    padding: 12px 25px;
+    background: #38bdf8;
+    color: #0f172a;
+    font-weight: 600;
+    border-radius: 10px;
+    text-decoration: none;
+    margin-top: 20px;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.join-btn:hover {
+    background: #0ea5e9;
+    transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    #lessons-list a {
+        font-size: 0.95rem;
+        padding: 10px 12px;
+    }
+}
